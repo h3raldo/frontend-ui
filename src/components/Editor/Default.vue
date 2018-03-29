@@ -15,16 +15,17 @@
 			<input class="form-input" type="text" id="default_value" placeholder="Name" v-model="current.default_value">
 		</div>
 
-		<div class="form-group" v-if="shouldShowInput('custom_validation')">
-			<label class="form-label" for="custom_validation">Custom Validation</label>
-			<input class="form-input" type="text" id="custom_validation" placeholder="Name" v-model="current.custom_validation">
-		</div>
+		<template v-if="shouldShowInput('custom_validation')">
+			<CustomValidation :current="current"></CustomValidation>
+		</template>
 
 		<Tags :current="current" :types="types"></Tags>
 	</div>
 </template>
 <script>
 import Tags from './Tags.vue'
+import CustomValidation from './Default/CustomValidation.vue'
+
 export default {
 	name: 'Default',
 	props: {
@@ -57,11 +58,11 @@ export default {
 				return exclude === input;
 			});
 
-			return( excluded.length > 0 )
+			return( excluded.length < 1 )
 		}
 	},
 	components: {
-		Tags
+		CustomValidation, Tags
 	}
 }
 </script>

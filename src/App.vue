@@ -33,9 +33,6 @@ import Editor from './components/Editor.vue'
 
 export default {
 	name: 'app',
-	components: {
-		Selector, Editor
-	},
 	methods: {
 
 		newInput: function( type )
@@ -210,6 +207,9 @@ export default {
 				]
 			}
 		}
+	},
+	components: {
+		Selector, Editor
 	}
 }
 </script>
