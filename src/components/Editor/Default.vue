@@ -10,12 +10,12 @@
 			<input class="form-input" type="text" id="reference_name" placeholder="Name" v-model="current.reference_name">
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" v-if="shouldShowInput('default_value')">
 			<label class="form-label" for="default_value">Default Value</label>
 			<input class="form-input" type="text" id="default_value" placeholder="Name" v-model="current.default_value">
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" v-if="shouldShowInput('custom_validation')">
 			<label class="form-label" for="custom_validation">Custom Validation</label>
 			<input class="form-input" type="text" id="custom_validation" placeholder="Name" v-model="current.custom_validation">
 		</div>
@@ -26,11 +26,40 @@
 <script>
 import Tags from './Tags.vue'
 export default {
-  name: 'Default',
-  props: {
+	name: 'Default',
+	props: {
 		current: Object,
 		types: Array
-  },
+	},
+	methods: {
+		/**
+		 * Checks the field type's excluded fields to determine
+		 * if the input should be visible for current field type
+		 *
+		 * @param {string} input Name of the input to be checked
+		 * @returns {boolean}
+		 */
+		shouldShowInput: function( input )
+		{
+			let excluded;
+			let self = this;
+			let type = self.types.filter(function(type){
+				return type.code === self.current.type;
+			});
+
+			if ( type.length !== 1 ){
+				return;
+			}
+
+			type = type[0];
+
+			excluded = type.exclude.filter(function(exclude){
+				return exclude === input;
+			});
+
+			return( excluded.length > 0 )
+		}
+	},
 	components: {
 		Tags
 	}

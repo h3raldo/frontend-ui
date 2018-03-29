@@ -76,31 +76,38 @@ export default {
 							{
 								name: "ANSA"
 							}
-						]
+						],
+						exclude: []
 					},
 					{
 						name: 'Number',
 						code: 'number',
 						description: 'This is for numbers',
-						tags: []
+						tags: [],
+						exclude: []
 					},
 					{
 						name: 'Date',
 						code: 'date',
 						description: 'This is for dates!',
-						tags: []
+						tags: [],
+						exclude: []
 					},
 					{
 						name: 'Currency',
 						code: 'currency',
 						description: 'This is for currenct',
-						tags: []
+						tags: [],
+						exclude: []
 					},
 					{
 						name: 'Select',
 						code: 'select',
 						description: 'This is for multi-items',
-						tags: []
+						tags: [],
+						exclude: [
+							'custom_validation', 'default_value'
+						]
 					}
 				],
 				new_input: {
