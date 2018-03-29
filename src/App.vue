@@ -33,6 +33,10 @@ import Editor from './components/Editor.vue'
 
 export default {
 	name: 'app',
+	mounted() {
+		// set up a new blank input when first mounted
+		this.newInput('text');
+	},
 	methods: {
 
 		newInput: function( type )
@@ -46,13 +50,14 @@ export default {
 			this.view.current = input;
 		},
 
-		setExtra: function( extra ){
+		setExtra: function( extra )
+		{
 			Vue.set( this.view.current.extra, extra.name, extra.value );
 		},
 
 		// saves the view input to the user
-		saveInput: function(){
-
+		saveInput: function()
+		{
 			this.user.inputs.push( Object.assign({}, this.view.current) );
 
 			// reset the current view
@@ -112,27 +117,22 @@ export default {
 					reference_name: 'Reference name thing',
 					display_label: 'display label',
 					default_value: 'default value',
-					custom_validation: '.@#AS/',
+					custom_validation: '',
 					tags: [],
 					field_group: '',
 					extra: {}
 				},
+				new_group: {
+					name: "",
+					edit: true
+				}
 
 			},
 
 			// data for the current interface, this is where we'd work on the input to be saved for the user
 			view: {
 				// current input being worked on
-				current: {
-					type: 'text',
-					reference_name: 'Reference name thing',
-					display_label: 'display label',
-					default_value: 'default value',
-					custom_validation: '.@#AS/',
-					tags: [],
-					field_group: '',
-					extra: {}
-				}
+				current: {}
 			},
 
 			// saved user data, data that would be saved to the DB. In this case it's all of the saved inputs and groups
@@ -146,7 +146,7 @@ export default {
 						reference_name: 'ref1',
 						display_label: 'display label',
 						default_value: 'default value',
-						custom_validation: '.@#AS/',
+						custom_validation: '',
 						tags: [],
 						field_group: '',
 						extra: {}

@@ -17,17 +17,24 @@
 </template>
 <script>
 export default {
-	name: 'Default',
+	name: 'CustomValidation',
 	props: {
 		current: Object,
 	},
 	data: function(){
 		return{
+			// locally stored test input string - doesn't need to be stored anywhere so we're using local component data
 			test_input: ''
 		}
 	},
 	methods: {
-		isValidRegex: function(){
+		/**
+		 * Checks if the user's pattern validates as RegEx
+		 *
+		 * @returns {boolean}
+		 */
+		isValidRegex: function()
+		{
 			let regex = this.current.custom_validation;
 
 			try {
@@ -38,7 +45,14 @@ export default {
 
 			return true;
 		},
-		regexMatchesTest: function(){
+
+		/**
+		 * Tests the test input against the user's RegEx pattern
+		 *
+		 * @returns {boolean}
+		 */
+		regexMatchesTest: function()
+		{
 			let regex = new RegExp( this.current.custom_validation );
 			return regex.test( this.test_input );
 		}

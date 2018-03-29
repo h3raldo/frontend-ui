@@ -9,7 +9,7 @@
 
 			<div class="column col-4">
 				<h3>Field Groups</h3>
-				<Groups :current="view.current" :groups="user.groups" :inputs="user.inputs"></Groups>
+				<Groups :current="view.current" :groups="user.groups" :inputs="user.inputs" :new_group="app.new_group"></Groups>
 			</div>
 		</div>
 	</div>

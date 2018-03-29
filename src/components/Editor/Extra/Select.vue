@@ -34,10 +34,10 @@
 
 <script>
 export default {
-  name: 'Select',
-  props: {
+	name: 'Select',
+	props: {
 		current: Object
-  },
+	},
 	mounted() {
 		this.$emit(
 			'set-extra',
