@@ -1,34 +1,58 @@
 <template>
 	<div class="editor_tags">
-		<div v-for="(tag, index) in this.getTags()">
+		<div v-for="(tag) in this.getTags()">
 			<button @click="addTag(tag)">{{ tag.name }}</button>
 		</div>
-		<div v-for="(tag, index) in current.tags">
+		<div v-for="(tag, index) in getAppliedTags()">
 			{{ tag.name }} <button @click="removeTag(index)">X</button>
+			<div v-for="tag in tag.requires">
+				{{ tag.name }}<br>
+			</div>
+			<div v-for="tag in tag.returns">
+				{{ tag.name }}<br>
+			</div>
 		</div>
 	</div>
 </template>
 <script>
 export default {
-  name: 'Tags',
-  props: {
+	name: 'Tags',
+	props: {
 		current: Object,
-		types: Array
-  },
+		tags: Array
+	},
 	methods: {
+		getAppliedTags: function(){
+			let tags = [];
+			let self = this;
+			this.current.tags.forEach(function(tagId){
+				tags.push( self.getTagById( tagId ) )
+			});
+			return tags;
+		},
+		getTagById: function( id ){
+			let tag = this.tags.filter( function(tag){
+				return tag.id === id;
+			});
+
+			if( tag.length < 1 ){
+				return [];
+			}
+
+			return tag[0];
+		},
 		getTags: function()
 		{
 			let self = this;
-			let types = this.types.filter(function( type ) {
-				return ( type.code === self.current.type );
+			let tags = this.tags.filter(function( tag ) {
+				return ( tag.types.indexOf( self.current.type ) !== -1 );
 			});
-			let type,tags;
 
-			if( types.length < 1 ){
+			if( tags.length < 1 ){
 				return []
 			}
 
-			return types[0].tags.filter(function(tag){
+			return tags.filter(function(tag){
 				return !self.isTagAdded( tag.name )
 			});
 
@@ -40,7 +64,7 @@ export default {
 				return;
 			}
 
-			this.current.tags.push( Object.assign({},tag) );
+			this.current.tags.push( tag.id ) ;
 		},
 		removeTag: function( tagIndex )
 		{
@@ -55,7 +79,7 @@ export default {
 		},
 		isTagAdded: function( tagName )
 		{
-			return this.isInObjectArray( this.current.tags, 'name', tagName );
+			return this.current.tags.indexOf( tagName ) !== -1;
 		}
 	}
 }

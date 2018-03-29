@@ -19,7 +19,7 @@
 			<CustomValidation :current="current"></CustomValidation>
 		</template>
 
-		<Tags :current="current" :types="types"></Tags>
+		<Tags :current="current" :tags="tags"></Tags>
 	</div>
 </template>
 <script>
@@ -30,7 +30,8 @@ export default {
 	name: 'Default',
 	props: {
 		current: Object,
-		types: Array
+		types: Array,
+		tags: Array
 	},
 	methods: {
 		/**

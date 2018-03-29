@@ -74,41 +74,45 @@ export default {
 						name: 'Text',
 						code: 'text',
 						description: 'This is for text',
-						tags: [
-							{
-								name: "ANSA"
-							}
-						],
 						exclude: []
 					},
 					{
 						name: 'Number',
 						code: 'number',
 						description: 'This is for numbers',
-						tags: [],
 						exclude: []
 					},
 					{
 						name: 'Date',
 						code: 'date',
 						description: 'This is for dates!',
-						tags: [],
 						exclude: []
 					},
 					{
 						name: 'Currency',
 						code: 'currency',
 						description: 'This is for currenct',
-						tags: [],
 						exclude: []
 					},
 					{
 						name: 'Select',
 						code: 'select',
 						description: 'This is for multi-items',
-						tags: [],
 						exclude: [
 							'custom_validation', 'default_value'
+						]
+					}
+				],
+				tags: [
+					{
+						name: "Vinmaster",
+						id: "vinmaster",
+						types: [ 'text' ],
+						requires: [
+							{ name: 'VIN' }
+						],
+						returns: [
+							{ name: 'Car Make' }
 						]
 					}
 				],
@@ -119,10 +123,11 @@ export default {
 					default_value: 'default value',
 					custom_validation: '',
 					tags: [],
-					field_group: '',
+					field_group: {},
 					extra: {}
 				},
 				new_group: {
+					id: 1,
 					name: "",
 					edit: true
 				}

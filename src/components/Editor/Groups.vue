@@ -9,7 +9,7 @@
 			</template>
 			<template v-else>
 				<h3>{{ group.name }} - {{ getGroupInputCount(group.name) }}</h3>
-				<button v-if="group.name === current.field_group" @click="removeGroupFromCurrent(group)">Unassign</button>
+				<button v-if="group.name === current.field_group.name" @click="removeGroupFromCurrent(group)">Unassign</button>
 				<button v-else @click="addGroupToCurrent(group)">Assign to Input</button>
 				<button @click="editGroup(index)">Edit</button>
 			</template>
@@ -42,7 +42,7 @@ export default {
 		},
 		addGroupToCurrent: function( group )
 		{
-			this.current.field_group = group.name;
+			this.current.field_group = group;
 		},
 		removeGroupFromCurrent: function()
 		{
@@ -51,12 +51,12 @@ export default {
 		getInputsByGroup( group_name )
 		{
 			return this.inputs.filter(function(input){
-				return input.field_group === group_name
+				return input.field_group.name === group_name
 			});
 		},
 		getGroupInputCount: function( group_name )
 		{
-			let matched = this.getInputsByGroup(group_name);
+			let matched = this.getInputsByGroup( group_name );
 			return matched.length;
 		}
 

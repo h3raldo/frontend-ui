@@ -3,7 +3,7 @@
 		<div class="columns">
 			<div class="column col-8">
 				<h3>Field Details</h3>
-				<Default :current="view.current" :types="app.input_types"></Default>
+				<Default :current="view.current" :types="app.input_types" :tags="app.tags"></Default>
 				<Extra :current="view.current" @set-extra="$emit('set-extra', $event)"></Extra>
 			</div>
 
