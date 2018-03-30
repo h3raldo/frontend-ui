@@ -3,15 +3,17 @@
 		<div v-for="(tag) in this.getTags()">
 			<button @click="addTag(tag)">{{ tag.name }}</button>
 		</div>
-		<div v-for="(tag, index) in getAppliedTags()">
-			{{ tag.name }} <button @click="removeTag(index)">X</button>
-			<div v-for="tag in tag.requires">
-				{{ tag.name }}<br>
+		<template v-if="current.tags">
+			<div v-for="(tag, index) in getAppliedTags()">
+				{{ tag.name }} <button @click="removeTag(index)">X</button>
+				<div v-for="tag in tag.requires">
+					{{ tag.name }}<br>
+				</div>
+				<div v-for="tag in tag.returns">
+					{{ tag.name }}<br>
+				</div>
 			</div>
-			<div v-for="tag in tag.returns">
-				{{ tag.name }}<br>
-			</div>
-		</div>
+		</template>
 	</div>
 </template>
 <script>

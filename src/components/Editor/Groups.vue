@@ -19,13 +19,13 @@
 </template>
 <script>
 export default {
-  name: 'Groups',
-  props: {
+	name: 'Groups',
+	props: {
 		current: Object,
 		groups: Array,
 		inputs: Array,
 		new_group: Object
-  },
+	},
 	methods: {
 		addGroup: function()
 		{

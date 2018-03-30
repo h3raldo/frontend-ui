@@ -114,6 +114,17 @@ export default {
 						returns: [
 							{ name: 'Car Make' }
 						]
+					},
+					{
+						name: "Housemaster",
+						id: "housemaster",
+						types: [ 'text' ],
+						requires: [
+							{ name: 'Address' }
+						],
+						returns: [
+							{ name: 'House Type' }
+						]
 					}
 				],
 				new_input: {
