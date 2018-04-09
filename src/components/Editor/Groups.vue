@@ -1,20 +1,34 @@
 <template>
 	<div class="editor_groups">
-		<div v-for="(group, index) in groups">
-			<template v-if="group.edit === true">
-				<input type="text" v-model="group.name" placeholder="Enter Name">
-				<template v-if="group.name.length > 0">
-					<button @click="saveGroup(index)">Save</button>
-				</template>
-			</template>
-			<template v-else>
-				<h3>{{ group.name }} - {{ getGroupInputCount(group.name) }}</h3>
-				<button v-if="group.name === current.field_group.name" @click="removeGroupFromCurrent(group)">Unassign</button>
-				<button v-else @click="addGroupToCurrent(group)">Assign to Input</button>
-				<button @click="editGroup(index)">Edit</button>
-			</template>
+		<div class="editor_groups_fields">
+			<h3>Field Groups</h3>
+			<div v-for="(group, index) in groups">
+				<div class="card" 
+					v-bind:class="{ 'bg-primary': group.name === current.field_group.name }"
+					>
+					<template v-if="group.edit === true">
+						<div class="input-group">
+							<input class="form-input" type="text" v-model="group.name" placeholder="Enter Name">
+							<template v-if="group.name.length > 0">
+								<button class="btn btn-primary input-group-btn" @click="saveGroup(index)">Save</button>
+							</template>
+						</div>
+					</template>
+					<template v-else>
+						<div class="card-header" @click="addGroupToCurrent(group)">
+							<div class="card-title h5">
+								{{ group.name }}
+								<button class="btn btn-secondary btn-sm" @click="editGroup(index)"><i class="icon icon-edit"></i></button>
+							</div>
+							<div class="card-subtitle text-gray">{{ getGroupInputCount(group.name) }} other inputs</div>
+						</div>
+					</template>
+				</div>
+			</div>
 		</div>
-		<button @click="addGroup()">Add Group</button>
+		<div class="editor_groups_buttons">
+			<button class="btn btn-secondary btn-block" @click="addGroup()"><i class="icon icon-plus"></i> Add New Group</button>
+		</div>
 	</div>
 </template>
 <script>
@@ -63,3 +77,21 @@ export default {
 	}
 }
 </script>
+<style>
+.editor_groups{
+	padding: 20px 10px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+}
+.editor_groups_fields{
+	background: #F9FBFB;
+	padding: 20px;
+	flex: 1;
+}
+.editor_groups_buttons{
+	background: #F9FBFB;
+	padding: 0 20px 20px 20px;
+}
+</style>

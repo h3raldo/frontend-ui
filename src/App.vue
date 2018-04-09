@@ -1,25 +1,42 @@
 <template>
 
 	<div id="app">
-		<h1>Commercial Property - Add Field</h1>
 
-		<div class="columns">
-			<div class="column col-4">
-				<Selector
-					:types="app.input_types"
-					@new-input="newInput($event)">
-				</Selector>
+		<Navbar></Navbar>
+
+		<div class="form-container">
+
+			<div class="form-header">
+				<h1>Commercial Property - Add Field</h1>
 			</div>
-			<div class="column col-8">
 
-				<Editor
-					:view="view"
-					:user="user"
-					:app="app"
-					@set-extra="setExtra($event)">
-				</Editor>
+			<div class="form-builder mb-2">
+				<div class="container">
+					<div class="columns">
+						<div class="column col-3 col-md-12 relative">
+							<Selector
+								:types="app.input_types"
+								:current="view.current"
+								@new-input="newInput($event)">
+							</Selector>
+						</div>
+						<div class="column col-9 col-md-12 editor_column relative">
+							<Editor
+								:view="view"
+								:user="user"
+								:app="app"
+								@set-extra="setExtra($event)">
+							</Editor>
+						</div>
+					</div>
+				</div>
+			</div>
 
-				<button @click="saveInput">Save Input</button>
+			<div class="form-actions">
+				<button class="btn btn-primary btn-lg" @click="saveInput">Save Changes</button>
+
+				<button class="btn btn-error btn-lg float-right" @click="saveInput">Delete Input</button>
+				<button class="btn btn-default btn-lg float-right mr-2" @click="saveInput">Cancel Changes</button>
 			</div>
 		</div>
 	</div>
@@ -28,6 +45,7 @@
 
 <script>
 import Vue from 'vue'
+import Navbar from "./components/Navbar.vue"
 import Selector from "./components/Selector.vue"
 import Editor from './components/Editor.vue'
 
@@ -73,31 +91,36 @@ export default {
 					{
 						name: 'Text',
 						code: 'text',
-						description: 'This is for text',
+						description: 'String of text',
+						default_display: 'Free-form text input',
 						exclude: []
 					},
 					{
 						name: 'Number',
 						code: 'number',
-						description: 'This is for numbers',
+						description: 'Number input box',
+						default_display: 'Free-form number type input',
 						exclude: []
 					},
 					{
 						name: 'Date',
 						code: 'date',
-						description: 'This is for dates!',
+						description: 'Standard ISO format date',
+						default_display: 'Datepicker, with configurable format',
 						exclude: []
 					},
 					{
 						name: 'Currency',
 						code: 'currency',
-						description: 'This is for currenct',
+						description: 'Number input with currency format',
+						default_display: 'Test',
 						exclude: []
 					},
 					{
 						name: 'Select',
 						code: 'select',
-						description: 'This is for multi-items',
+						description: 'Select for a list of options',
+						default_display: 'Standard dropdown with multiple options',
 						exclude: [
 							'custom_validation', 'default_value'
 						]
@@ -129,9 +152,9 @@ export default {
 				],
 				new_input: {
 					type: 'text',
-					reference_name: 'Reference name thing',
-					display_label: 'display label',
-					default_value: 'default value',
+					reference_name: '',
+					display_label: '',
+					default_value: '',
 					custom_validation: '',
 					tags: [],
 					field_group: {},
@@ -225,7 +248,52 @@ export default {
 		}
 	},
 	components: {
-		Selector, Editor
+		Navbar, Selector, Editor
 	}
 }
 </script>
+<style lang="scss">
+html,body{
+	background: #F9FBFB;
+}
+.navbar{
+	background: #004953
+}
+.form-builder{
+	position: relative;
+	border: 1px solid #C1D7DA;
+	border-radius: 5px;
+	overflow-x: hidden;
+
+
+	& > .container{
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+.card{
+	cursor: pointer;
+}
+.editor_column{
+	background: #fff;
+}
+.form-container{
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    right: 20px;
+    bottom: 50px;
+    max-width: 1500px;
+    margin: 0 auto;
+    min-height: 600px;
+
+    display: flex;
+    flex-direction: column;
+}
+.form-header, .form-footer{
+	flex: 0;
+}
+.form-builder{
+	flex: 1;
+}
+</style>	

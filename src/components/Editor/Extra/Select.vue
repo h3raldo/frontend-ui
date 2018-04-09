@@ -21,14 +21,16 @@
 				<div class="column col-2" v-if="option.position > 1">
 					<div class="form-group">
 						<label class="form-label">&nbsp;</label>
-						<button v-on:click="removeOption(index)">Remove</button>
+						<button class="btn btn-error" v-on:click="removeOption(index)">Remove</button>
 					</div>
 				</div>
 			</div>
 
 		</div>
 
-		<button v-on:click="addOption()">Add Option</button>
+		<div class="mt-2">
+			<button class="btn btn-secondary" v-on:click="addOption()"><i class="icon icon-plus"></i> Add Option</button>
+		</div>
 	</div>
 </template>
 

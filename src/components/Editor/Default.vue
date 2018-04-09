@@ -1,23 +1,36 @@
 <template>
 	<div class="editor_default">
-		<div class="form-group">
-			<label class="form-label" for="display_label">Display Label</label>
-			<input class="form-input" type="text" id="display_label" placeholder="Name" v-model="current.display_label">
+
+		<div class="columns">
+			<div class="column col-6">
+				<div class="form-group">
+					<label class="form-label" for="display_label">Display Label</label>
+					<input class="form-input" type="text" id="display_label" placeholder="Name" v-model="current.display_label" @blur="generateReferenceName()">
+					<p class="form-input-hint">For display purposes, spaces allowed</p>
+				</div>
+			</div>
+			<div class="column col-6">
+				<div class="form-group">
+					<label class="form-label" for="reference_name">Reference Name</label>
+					<input class="form-input" type="text" id="reference_name" placeholder="Name" v-model="current.reference_name" disabled>
+					<p class="form-input-hint">Used to reference in calculations, no spaces allowed</p>
+				</div>
+			</div>
 		</div>
 
-		<div class="form-group">
-			<label class="form-label" for="reference_name">Reference Name</label>
-			<input class="form-input" type="text" id="reference_name" placeholder="Name" v-model="current.reference_name">
+		<div class="columns">
+			<div class="column col-6">
+				<div class="form-group" v-if="shouldShowInput('default_value')">
+					<label class="form-label" for="default_value">Default Value</label>
+					<input class="form-input" type="text" id="default_value" placeholder="Name" v-model="current.default_value">
+				</div>
+			</div>
+			<div class="column col-6">
+				<template v-if="shouldShowInput('custom_validation')">
+					<CustomValidation :current="current"></CustomValidation>
+				</template>
+			</div>
 		</div>
-
-		<div class="form-group" v-if="shouldShowInput('default_value')">
-			<label class="form-label" for="default_value">Default Value</label>
-			<input class="form-input" type="text" id="default_value" placeholder="Name" v-model="current.default_value">
-		</div>
-
-		<template v-if="shouldShowInput('custom_validation')">
-			<CustomValidation :current="current"></CustomValidation>
-		</template>
 
 		<Tags :current="current" :tags="tags"></Tags>
 	</div>
@@ -34,6 +47,16 @@ export default {
 		tags: Array
 	},
 	methods: {
+		generateReferenceName: function()
+		{
+			let label = this.current.display_label;
+			// make sure something was written
+			if( label.length < 1 ) return;
+			let reference_name = 'ref_'+ label
+			// replace whitespace with _, remove non alphanumeric characters, lowercase it
+			reference_name = reference_name.replace(/ /g,'_').replace(/\W/g, '').toLowerCase();
+			this.current.reference_name = reference_name;
+		},
 		/**
 		 * Checks the field type's excluded fields to determine
 		 * if the input should be visible for current field type

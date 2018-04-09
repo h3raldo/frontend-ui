@@ -1,19 +1,46 @@
 <template>
 	<div class="editor_tags">
-		<div v-for="(tag) in this.getTags()">
-			<button @click="addTag(tag)">{{ tag.name }}</button>
-		</div>
-		<template v-if="current.tags">
-			<div v-for="(tag, index) in getAppliedTags()">
-				{{ tag.name }} <button @click="removeTag(index)">X</button>
-				<div v-for="tag in tag.requires">
-					{{ tag.name }}<br>
-				</div>
-				<div v-for="tag in tag.returns">
-					{{ tag.name }}<br>
-				</div>
+		<h5>Tags</h5>
+		<div class="columns">
+			<div class="column col-6">
+				<p class="mb-1">Tag Group</p>
+				<template v-for="(tag) in this.getTags()">
+					<span class="label label-primary label-rounded" @click="addTag(tag)">{{ tag.name }}</span>&nbsp;
+				</template>
 			</div>
-		</template>
+			<div class="column col-6">
+				<p>Tags</p>
+				<template v-if="current.tags">
+					<template v-if="getAppliedTags().length < 1">
+						<p><i>Select a tag group to see individual tags.</i></p>
+					</template>
+					<div v-for="(tag, index) in getAppliedTags()">
+						<div class="card">
+							<div class="card-body">
+								<div>
+									{{ tag.name }} <button class="btn btn-error btn-sm" @click="removeTag(index)">X</button>
+								</div>
+								
+								<div class="columns">
+									<div class="column col-6">
+										<b>requires:</b>
+										<div v-for="tag in tag.requires">
+											{{ tag.name }}<br>
+										</div>
+									</div>
+									<div class="column col-6">
+										<b>returns:</b>
+										<div v-for="tag in tag.returns">
+											{{ tag.name }}<br>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</template>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
@@ -55,7 +82,7 @@ export default {
 			}
 
 			return tags.filter(function(tag){
-				return !self.isTagAdded( tag.name )
+				return !self.isTagAdded( tag.id )
 			});
 
 		},
@@ -86,3 +113,8 @@ export default {
 	}
 }
 </script>
+<style lang="scss" scoped>
+	.label{
+		cursor: pointer;
+	}
+</style>
