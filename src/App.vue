@@ -56,7 +56,12 @@ export default {
 		this.newInput('text');
 	},
 	methods: {
-
+		/**
+		 * Adds a new blank input to the current view. Overwrites
+		 * any current unsaved data in the view
+		 *
+		 * @param {string} type Type of field to add
+		 */
 		newInput: function( type )
 		{
 			// clone new input and reset extra and tags
@@ -67,13 +72,21 @@ export default {
 
 			this.view.current = input;
 		},
-
+		/**
+		 * Sets extra data on an input view. This is data that 
+		 * isn't standardized and may be different based on input
+		 * type, so it's manually added when needed
+		 *
+		 * @param {object} extra Object in format { name: 'prop_name_here', value: []|{}\'' }
+		 */
 		setExtra: function( extra )
 		{
 			Vue.set( this.view.current.extra, extra.name, extra.value );
 		},
 
-		// saves the view input to the user
+		/**
+		 * Adds the input from the current view to the user's stored inputs
+		 */
 		saveInput: function()
 		{
 			this.user.inputs.push( Object.assign({}, this.view.current) );

@@ -59,6 +59,9 @@ export default {
 		}
 	},
 	methods: {
+		/**
+		 * Adds an option to the array of select options
+		 */
 		addOption: function() {
 			let options = this.current.extra.options;
 			let next_position = options[options.length-1].position + 1;
@@ -67,6 +70,11 @@ export default {
 
 			this.current.extra.options.push( new_option );
 		},
+		/**
+		 * Remove an option from the array of select options
+		 *
+		 * @param {string} index Index of the option to be removed
+		 */
 		removeOption: function( index ) {
 			this.current.extra.options.splice(index, 1);
 		}
