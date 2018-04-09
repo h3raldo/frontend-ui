@@ -47,6 +47,9 @@ export default {
 		tags: Array
 	},
 	methods: {
+		/**
+		 * Generates the reference name based on the display label
+		 */
 		generateReferenceName: function()
 		{
 			let label = this.current.display_label;
