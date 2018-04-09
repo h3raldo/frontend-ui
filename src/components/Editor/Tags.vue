@@ -51,6 +51,11 @@ export default {
 		tags: Array
 	},
 	methods: {
+		/**
+		 * Get tags currently applied to current input
+		 *
+		 * @returns {array}
+		 */
 		getAppliedTags: function(){
 			let tags = [];
 			let self = this;
@@ -59,6 +64,12 @@ export default {
 			});
 			return tags;
 		},
+		/**
+		 * Returns full tag object using ID
+		 *
+		 * @param {string} id ID of the tag
+		 * @returns {object}
+		 */
 		getTagById: function( id ){
 			let tag = this.tags.filter( function(tag){
 				return tag.id === id;
@@ -70,6 +81,12 @@ export default {
 
 			return tag[0];
 		},
+		/**
+		 * Returns available tags based on the input type, 
+		 * excludes the applied tags
+		 *
+		 * @returns {array}
+		 */
 		getTags: function()
 		{
 			let self = this;
@@ -86,6 +103,11 @@ export default {
 			});
 
 		},
+		/**
+		 * Adds tag to current input
+		 *
+		 * @param {object} tag Tag object to be added
+		 */
 		addTag: function( tag )
 		{
 			// if it is, don't do anything
@@ -95,10 +117,22 @@ export default {
 
 			this.current.tags.push( tag.id ) ;
 		},
+		/**
+		 * Removes tag from current input
+		 *
+		 * @param {object} tag Tag object to be added
+		 */
 		removeTag: function( tagIndex )
 		{
 			this.current.tags.splice(tagIndex, 1);
 		},
+		/**
+		 * Checks if a key-value pair exists in an array of objects
+		 *
+		 * @param {array} array Array to search
+		 * @param {string} name Property name to search
+		 * @param {string} value Value the property should equal to
+		 */
 		isInObjectArray: function( array, name, value ){
 			let matched = array.filter(function(item){
 				return item.name === value
@@ -106,6 +140,11 @@ export default {
 
 			return ( matched.length > 0 );
 		},
+		/**
+		 * Checks if tag is already added to current input
+		 *
+		 * @param {string} tagName Name of tag to search with
+		 */
 		isTagAdded: function( tagName )
 		{
 			return this.current.tags.indexOf( tagName ) !== -1;

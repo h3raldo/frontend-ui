@@ -42,6 +42,12 @@ export default {
 		}
 	},
 	methods: {
+		/**
+		 * Returns available field types based on entered search term,
+		 * returns all types if no search term is entered
+		 *
+		 * @returns {array}
+		 */
 		availableTypes: function(){
 			// return full array if no search term has been entered
 			if( this.filter_term.length < 1 ) return this.types;

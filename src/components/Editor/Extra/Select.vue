@@ -73,7 +73,7 @@ export default {
 		/**
 		 * Remove an option from the array of select options
 		 *
-		 * @param {string} index Index of the option to be removed
+		 * @param {int} index Index of the option to be removed
 		 */
 		removeOption: function( index ) {
 			this.current.extra.options.splice(index, 1);
