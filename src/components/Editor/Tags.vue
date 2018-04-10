@@ -110,7 +110,7 @@ export default {
 		 */
 		addTag: function( tag )
 		{
-			// if it is, don't do anything
+			// if tag is added, don't do duplicate
 			if( this.isTagAdded( tag.name ) ){
 				return;
 			}
@@ -155,5 +155,8 @@ export default {
 <style lang="scss" scoped>
 	.label{
 		cursor: pointer;
+	}
+	.card{
+		cursor: default;
 	}
 </style>
