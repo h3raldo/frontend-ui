@@ -10,10 +10,16 @@
 				</div>
 			</div>
 			<div class="column col-6">
-				<div class="form-group">
+				<div class="form-group" :class="{ 'has-error': !isReferenceUnique() }">
 					<label class="form-label" for="reference_name">Reference Name</label>
-					<input class="form-input" type="text" id="reference_name" placeholder="Name" v-model="current.reference_name" disabled>
-					<p class="form-input-hint">Used to reference in calculations, no spaces allowed</p>
+					<input class="form-input" type="text" id="reference_name" placeholder="Name" v-model="current.reference_name">
+					
+					<template v-if="!isReferenceUnique()">
+						<p class="form-input-hint">Another input has this reference, please choose a unique reference.</p>
+					</template>
+					<template v-else>
+						<p class="form-input-hint">Used to reference in calculations, no spaces allowed</p>
+					</template>
 				</div>
 			</div>
 		</div>
@@ -44,7 +50,8 @@ export default {
 	props: {
 		current: Object,
 		types: Array,
-		tags: Array
+		tags: Array,
+		inputs: Array
 	},
 	methods: {
 		/**
@@ -59,6 +66,20 @@ export default {
 			// replace whitespace with _, remove non alphanumeric characters, lowercase it
 			reference_name = reference_name.replace(/ /g,'_').replace(/\W/g, '').toLowerCase();
 			this.current.reference_name = reference_name;
+		},
+		/**
+		 * Make sure the reference name is unique
+		 *
+		 * @returns {boolean}
+		 */
+		isReferenceUnique: function()
+		{
+			let self = this;
+			let matched = this.inputs.filter(function(input){
+				return input.reference_name === self.current.reference_name
+			});
+
+			return ( matched.length < 1 );
 		},
 		/**
 		 * Checks the field type's excluded fields to determine

@@ -4,7 +4,7 @@
 			<div class="column col-8 col-md-12 relative">
 				<div class="editor_fields_container">
 					<h3>Field Details</h3>
-					<Default :current="view.current" :types="app.input_types" :tags="app.tags"></Default>
+					<Default :current="view.current" :inputs="user.inputs" :types="app.input_types" :tags="app.tags"></Default>
 					<Extra :current="view.current" @set-extra="$emit('set-extra', $event)"></Extra>
 				</div>
 			</div>

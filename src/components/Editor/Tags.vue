@@ -1,46 +1,51 @@
 <template>
 	<div class="editor_tags">
 		<h5>Tags</h5>
-		<div class="columns">
-			<div class="column col-6">
-				<p class="mb-1">Tag Group</p>
-				<template v-for="(tag) in this.getTags()">
-					<span class="label label-primary label-rounded" @click="addTag(tag)">{{ tag.name }}</span>&nbsp;
-				</template>
-			</div>
-			<div class="column col-6">
-				<p>Tags</p>
-				<template v-if="current.tags">
-					<template v-if="getAppliedTags().length < 1">
-						<p><i>Select a tag group to see individual tags.</i></p>
+		<template v-if="getTags().length > 0 || getAppliedTags().length > 0">
+			<div class="columns">
+				<div class="column col-6">
+					<p class="mb-1">Tag Group</p>
+					<template v-for="(tag) in this.getTags()">
+						<span class="label label-primary label-rounded" @click="addTag(tag)">{{ tag.name }}</span>&nbsp;
 					</template>
-					<div v-for="(tag, index) in getAppliedTags()">
-						<div class="card">
-							<div class="card-body">
-								<div>
-									{{ tag.name }} <button class="btn btn-error btn-sm" @click="removeTag(index)">X</button>
-								</div>
-								
-								<div class="columns">
-									<div class="column col-6">
-										<b>requires:</b>
-										<div v-for="tag in tag.requires">
-											{{ tag.name }}<br>
-										</div>
+				</div>
+				<div class="column col-6">
+					<p>Tags</p>
+					<template v-if="current.tags">
+						<template v-if="getAppliedTags().length < 1">
+							<p><i>Select a tag group to see individual tags.</i></p>
+						</template>
+						<div v-for="(tag, index) in getAppliedTags()">
+							<div class="card">
+								<div class="card-body">
+									<div>
+										{{ tag.name }} <button class="btn btn-error btn-sm" @click="removeTag(index)">X</button>
 									</div>
-									<div class="column col-6">
-										<b>returns:</b>
-										<div v-for="tag in tag.returns">
-											{{ tag.name }}<br>
+									
+									<div class="columns">
+										<div class="column col-6">
+											<b>Requires:</b>
+											<div v-for="tag in tag.requires">
+												{{ tag.name }}<br>
+											</div>
+										</div>
+										<div class="column col-6">
+											<b>Returns:</b>
+											<div v-for="tag in tag.returns">
+												{{ tag.name }}<br>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</template>
+					</template>
+				</div>
 			</div>
-		</div>
+		</template>
+		<template v-else>
+			<p>No Available Tags.</p>
+		</template>
 	</div>
 </template>
 <script>
@@ -56,9 +61,11 @@ export default {
 		 *
 		 * @returns {array}
 		 */
-		getAppliedTags: function(){
+		getAppliedTags: function()
+		{
 			let tags = [];
 			let self = this;
+			if( !this.current.tags ) return [];
 			this.current.tags.forEach(function(tagId){
 				tags.push( self.getTagById( tagId ) )
 			});
@@ -70,7 +77,8 @@ export default {
 		 * @param {string} id ID of the tag
 		 * @returns {object}
 		 */
-		getTagById: function( id ){
+		getTagById: function( id )
+		{
 			let tag = this.tags.filter( function(tag){
 				return tag.id === id;
 			});

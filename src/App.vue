@@ -15,6 +15,7 @@
 					<div class="columns">
 						<div class="column col-3 col-md-12 relative">
 							<Selector
+								:user="user"
 								:types="app.input_types"
 								:current="view.current"
 								@new-input="newInput($event)">
@@ -51,7 +52,13 @@ import Editor from './components/Editor.vue'
 
 export default {
 	name: 'app',
-	mounted() {
+	mounted() 
+	{
+		// retrieve the user data. i'm using local storage as our DB
+		if( localStorage.getItem('user') !== null ){
+			this.user = JSON.parse( localStorage.getItem('user') );
+		}
+
 		// set up a new blank input when first mounted
 		this.newInput('text');
 	},
@@ -90,6 +97,9 @@ export default {
 		saveInput: function()
 		{
 			this.user.inputs.push( Object.assign({}, this.view.current) );
+
+			// save user data to local storage
+			localStorage.setItem('user', JSON.stringify(this.user) );
 
 			// reset the current view
 			this.newInput( 'text' );
@@ -195,7 +205,7 @@ export default {
 				inputs: [
 					{
 						type: 'text',
-						reference_name: 'ref1',
+						reference_name: 'ref_1',
 						display_label: 'display label',
 						default_value: 'default value',
 						custom_validation: '',
