@@ -3,19 +3,19 @@
 		<h5>Tags</h5>
 		<template v-if="getTags().length > 0 || getAppliedTags().length > 0">
 			<div class="columns">
-				<div class="column col-6">
+				<div class="column col-6 col-xs-12 editor_tags_groups">
 					<p class="mb-1">Tag Group</p>
 					<template v-for="(tag) in this.getTags()">
-						<span class="label label-primary label-rounded" @click="addTag(tag)">{{ tag.name }}</span>&nbsp;
+						<span class="label label-primary label-rounded" @click="addTag(tag)" :key="tag.id">{{ tag.name }}</span>&nbsp;
 					</template>
 				</div>
-				<div class="column col-6">
+				<div class="column col-6 col-xs-12 editor_tags_applied">
 					<p>Tags</p>
 					<template v-if="current.tags">
 						<template v-if="getAppliedTags().length < 1">
 							<p><i>Select a tag group to see individual tags.</i></p>
 						</template>
-						<div v-for="(tag, index) in getAppliedTags()">
+						<div v-for="(tag, index) in getAppliedTags()" :key="tag.id">
 							<div class="card">
 								<div class="card-body">
 									<div>
@@ -25,13 +25,13 @@
 									<div class="columns">
 										<div class="column col-6">
 											<b>Requires:</b>
-											<div v-for="tag in tag.requires">
+											<div v-for="tag in tag.requires" :key="tag.id">
 												{{ tag.name }}<br>
 											</div>
 										</div>
 										<div class="column col-6">
 											<b>Returns:</b>
-											<div v-for="tag in tag.returns">
+											<div v-for="tag in tag.returns" :key="tag.id">
 												{{ tag.name }}<br>
 											</div>
 										</div>
@@ -141,7 +141,8 @@ export default {
 		 * @param {string} name Property name to search
 		 * @param {string} value Value the property should equal to
 		 */
-		isInObjectArray: function( array, name, value ){
+		isInObjectArray: function( array, name, value )
+		{
 			let matched = array.filter(function(item){
 				return item.name === value
 			});

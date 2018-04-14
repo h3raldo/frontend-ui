@@ -32,18 +32,3 @@ export default {
 	}
 }
 </script>
-<style>
-	.editor{
-		height:100%;
-	}
-	.editor_fields_container{
-		padding: 20px 10px;
-		position: absolute;
-	    height: 100%;
-	    width: 100%;
-	    overflow-y: scroll;
-	}
-	.container, .columns{
-		height: 100%;
-	}
-</style>

@@ -2,14 +2,14 @@
 	<div class="editor_default">
 
 		<div class="columns">
-			<div class="column col-6">
+			<div class="column col-6 col-xs-12">
 				<div class="form-group">
 					<label class="form-label" for="display_label">Display Label</label>
 					<input class="form-input" type="text" id="display_label" placeholder="Name" v-model="current.display_label" @blur="generateReferenceName()">
 					<p class="form-input-hint">For display purposes, spaces allowed</p>
 				</div>
 			</div>
-			<div class="column col-6">
+			<div class="column col-6 col-xs-12">
 				<div class="form-group" :class="{ 'has-error': !isReferenceUnique() }">
 					<label class="form-label" for="reference_name">Reference Name</label>
 					<input class="form-input" type="text" id="reference_name" placeholder="Name" v-model="current.reference_name">
@@ -25,13 +25,13 @@
 		</div>
 
 		<div class="columns">
-			<div class="column col-6">
+			<div class="column col-6 col-xs-12">
 				<div class="form-group" v-if="shouldShowInput('default_value')">
 					<label class="form-label" for="default_value">Default Value</label>
 					<input class="form-input" type="text" id="default_value" placeholder="Name" v-model="current.default_value">
 				</div>
 			</div>
-			<div class="column col-6">
+			<div class="column col-6 col-xs-12">
 				<template v-if="shouldShowInput('custom_validation')">
 					<CustomValidation :current="current"></CustomValidation>
 				</template>
@@ -74,6 +74,11 @@ export default {
 		 */
 		isReferenceUnique: function()
 		{
+			// if blank, no need to check
+			if( !this.current.reference_name || this.current.reference_name.length < 1 ){
+				return true;
+			}
+
 			let self = this;
 			let matched = this.inputs.filter(function(input){
 				return input.reference_name === self.current.reference_name

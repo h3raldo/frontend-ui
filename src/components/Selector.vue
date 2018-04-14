@@ -2,30 +2,38 @@
 	<div class="selector">
 		<h3 class="mb-2">Field Types</h3>
 
-
-		<div class="form-group mb-2">
-			<label class="form-label">Filter Types</label>
-			<input class="form-input" type="text" placeholder="Filter" v-model="filter_term">
+		<div class="selector_fields_show" v-bind:class="{ 'd-none': open }">
+			<p><button class="btn btn-default" @click="showTypes()">Select Field Type</button></p>
 		</div>
 
-		<template  v-for="type in availableTypes()">
-			<div class="card" 
-				v-on:click="$emit('new-input', type.code)" 
-				v-bind:class="{ 'bg-primary': type.code === current.type }">
+		<div class="selector_fields" v-bind:class="{ 'open': open }">
 
-				<div class="card-header">
-					<div class="card-title h5">{{ type.name }}</div>
-					
-				</div>
-				<div class="card-body">
-					<div class="card-subtitle text-gray">Definition</div>
-					<p>{{ type.description }}</p>
-
-					<div class="card-subtitle text-gray">Default Display</div>
-					<p>{{ type.default_display }}</p>
-				</div>
+			<div class="form-group mb-2">
+				<label class="form-label">Filter Types</label>
+				<input class="form-input" type="text" placeholder="Filter" v-model="filter_term">
 			</div>
-		</template>
+
+			<template v-for="type in availableTypes()">
+				<div class="card" 
+					:key="type.code" 
+					@click="$emit('new-input', type.code); hideTypes()" 
+					v-bind:class="{ 'bg-primary': type.code === current.type }">
+
+					<div class="card-header">
+						<div class="card-title h5">{{ type.name }}</div>
+						
+					</div>
+					<div class="card-body">
+						<div class="card-subtitle text-gray">Definition</div>
+						<p>{{ type.description }}</p>
+
+						<div class="card-subtitle text-gray">Default Display</div>
+						<p>{{ type.default_display }}</p>
+					</div>
+				</div>
+			</template>
+
+		</div>
 	</div>
 </template>
 
@@ -38,17 +46,33 @@ export default {
 	},
 	data: function(){
 		return{
-			filter_term: ''
+			filter_term: '',
+			open: false
 		}
 	},
 	methods: {
+		/**
+		 * Opens the selector types
+		*/
+		showTypes: function()
+		{
+			this.open = true;
+		},
+		/**
+		 * Hides the selector types
+		*/
+		hideTypes: function()
+		{
+			this.open = false;
+		},
 		/**
 		 * Returns available field types based on entered search term,
 		 * returns all types if no search term is entered
 		 *
 		 * @returns {array}
 		 */
-		availableTypes: function(){
+		availableTypes: function()
+		{
 			// return full array if no search term has been entered
 			if( this.filter_term.length < 1 ) return this.types;
 
@@ -60,17 +84,3 @@ export default {
 	}
 }
 </script>
-<style>
-	.selector{
-		position: absolute;
-		height: 100%;
-		width: 100%;
-		overflow-y: scroll;
-		background: #EEF4F5;
-		padding: 20px;
-		padding-bottom: 0;
-	}
-	.card{
-		margin-bottom: 20px;
-	}
-</style>

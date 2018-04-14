@@ -1,0 +1,192 @@
+// app.vue
+html,body{
+	background: #F9FBFB;
+}
+.form-builder{
+	position: relative;
+	border: 1px solid #C1D7DA;
+	border-radius: 5px;
+	overflow-x: hidden;
+
+	&.loading{
+		opacity: .5;
+	}
+
+	> .container{
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+.card{
+	cursor: pointer;
+}
+.editor_column{
+	background: #fff;
+}
+.form-container{
+    top: 70px;
+    left: 20px;
+    right: 20px;
+    bottom: 50px;
+    max-width: 1500px;
+    margin: 0 auto;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+
+    @media screen and (max-width: $size-md){
+    	position: relative;
+    	top: auto;
+    	right: auto;
+    	bottom: auto;
+    	left: auto;
+    	padding: 0 10px 20px 10px;
+    }
+
+    .form-actions{
+
+    	.btn{
+    		margin-top: 5px;
+    	}
+
+    	@media screen and (max-width: $size-xs){
+    		.btn-default{
+    			float: none !important;
+    		}
+    	}
+
+    	@media screen and (max-width: $size-md){
+    		
+    	}
+    }
+}
+.form-header, .form-footer{
+	flex: 0;
+}
+.form-builder{
+	flex: 1;
+}
+
+// selector.vue
+.selector{
+	height: 100%;
+	width: 100%;
+	overflow-y: scroll;
+	background: #EEF4F5;
+	padding: 20px;
+	padding-bottom: 0;
+	position: absolute;
+
+	@media screen and (max-width: $size-md){
+		position: relative;
+	}
+}
+.card{
+	margin-bottom: 20px;
+}
+.selector_fields{
+
+	@media screen and (max-width: $size-md){
+		display: none;
+
+		&.open{
+			display: block;
+		}
+	}
+}
+.selector_fields_show{
+	display: none;
+
+	@media screen and (max-width: $size-md){
+		display: block;
+	}
+}
+
+// navbar.vue
+.navbar{ 
+	background: #004953;
+	padding: 5px;
+	margin-bottom: 20px;
+
+	.navbar-section{
+		max-width: 95%;
+		margin: 0 auto;
+
+		@media screen and (max-width: $size-md){
+			flex-wrap: wrap;
+		}		
+	}
+
+	.btn-link{
+		@media screen and (max-width: $size-md){
+			width: 33%;
+			margin-right: 0;
+		}
+	}
+
+	.logo{
+		margin-right: 80px;
+
+		@media screen and (max-width: $size-md){
+			width: 100%;
+			margin-right: 0;
+		}
+	}
+
+	.btn.btn-link{
+		color: rgba( 255,255,255, .8 );
+
+		&:hover, &.active{
+			background: rgba( 255,255,255,.3 )
+		}
+	}
+}
+
+// editor.vue
+.editor{
+	height:100%;
+}
+.editor_fields_container{
+	padding: 20px 10px;
+	height: 100%;
+	width: 100%;
+	overflow-y: scroll;
+	position: absolute;
+
+	@media screen and (max-width: $size-md){
+		position: relative;
+	}
+}
+.container, .columns{
+	height: 100%;
+}
+.editor_tags{
+	@media screen and (max-width: $size-md){
+		margin-top: 30px;
+	}
+}
+
+// groups.vue
+.editor_groups{
+	padding: 20px 10px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+}
+.editor_groups_fields{
+	background: #F9FBFB;
+	padding: 20px;
+	flex: 1;
+}
+.editor_groups_buttons{
+	background: #F9FBFB;
+	padding: 0 20px 20px 20px;
+}
+
+.editor_tags_groups{
+	@media screen and (max-width: $size-md){
+		margin-bottom: 25px;
+	}
+}

@@ -2,7 +2,7 @@
 	<div class="editor_groups">
 		<div class="editor_groups_fields">
 			<h3>Field Groups</h3>
-			<div v-for="(group, index) in groups">
+			<div v-for="(group, index) in groups" :key="group.id">
 				<div class="card" 
 					v-bind:class="{ 'bg-primary': group.name === current.field_group.name }"
 					>
@@ -113,21 +113,3 @@ export default {
 	}
 }
 </script>
-<style>
-.editor_groups{
-	padding: 20px 10px;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	overflow-y: scroll;
-}
-.editor_groups_fields{
-	background: #F9FBFB;
-	padding: 20px;
-	flex: 1;
-}
-.editor_groups_buttons{
-	background: #F9FBFB;
-	padding: 0 20px 20px 20px;
-}
-</style>

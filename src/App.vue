@@ -10,7 +10,7 @@
 				<h1>Commercial Property - Add Field</h1>
 			</div>
 
-			<div class="form-builder mb-2">
+			<div class="form-builder mb-2" v-bind:class="{loading: view.isLoading}">
 				<div class="container">
 					<div class="columns">
 						<div class="column col-3 col-md-12 relative">
@@ -34,7 +34,10 @@
 			</div>
 
 			<div class="form-actions">
-				<button class="btn btn-primary btn-lg" @click="saveInput">Save Changes</button>
+				<button class="btn btn-primary btn-lg" @click="saveInput" v-bind:class="{ 'disabled': !canSaveInput() && !isLoading, 'loading': view.isLoading }">
+					<template v-if="canSaveInput() || view.isLoading">Save Changes</template>
+					<template v-else>Missing Required Fields</template>
+				</button>
 
 				<button class="btn btn-error btn-lg float-right" @click="saveInput">Delete Input</button>
 				<button class="btn btn-default btn-lg float-right mr-2" @click="saveInput">Cancel Changes</button>
@@ -63,6 +66,22 @@ export default {
 		this.newInput('text');
 	},
 	methods: {
+		/**
+		 * Checks required fields are filled in so that the input can be saved
+		 *
+		 * @returns {boolean}
+		 */
+		canSaveInput: function()
+		{
+			if( this.view.current.display_label.length < 1 ){
+				return false;
+			}
+			if( this.view.current.reference_name.length < 1 ){
+				return false;
+			}
+
+			return true;
+		},
 		/**
 		 * Adds a new blank input to the current view. Overwrites
 		 * any current unsaved data in the view
@@ -96,6 +115,11 @@ export default {
 		 */
 		saveInput: function()
 		{
+			let self = this;
+
+			// start loading state for user feedback
+			this.view.isLoading = true;
+
 			this.user.inputs.push( Object.assign({}, this.view.current) );
 
 			// save user data to local storage
@@ -103,6 +127,11 @@ export default {
 
 			// reset the current view
 			this.newInput( 'text' );
+
+			// fake a loading time for this test
+			setTimeout( function(){ 
+				self.view.isLoading = false; 
+			}, 1000);
 		}
 
 	},
@@ -194,7 +223,8 @@ export default {
 			// data for the current interface, this is where we'd work on the input to be saved for the user
 			view: {
 				// current input being worked on
-				current: {}
+				current: {},
+				isLoading: false
 			},
 
 			// saved user data, data that would be saved to the DB. In this case it's all of the saved inputs and groups
@@ -202,71 +232,7 @@ export default {
 				// array of saved input groups
 				groups: [],
 				// array of saved inputs
-				inputs: [
-					{
-						type: 'text',
-						reference_name: 'ref_1',
-						display_label: 'display label',
-						default_value: 'default value',
-						custom_validation: '',
-						tags: [],
-						field_group: '',
-						extra: {}
-					},
-					{
-						type: 'number',
-						reference_name: 'ref2',
-						display_label: 'display label',
-						default_value: 'default value',
-						custom_validation: '.@#AS/',
-						tags: [],
-						field_group: '',
-						extra: {}
-					},
-					{
-						type: 'currency',
-						reference_name: 'Reference name thing',
-						display_label: 'display label',
-						default_value: 'default value',
-						custom_validation: '.@#AS/',
-						tags: [],
-						field_group: '',
-						extra: {
-							currency: 'USD'
-						}
-					},
-					{
-						type: 'date',
-						reference_name: 'Reference name thing',
-						display_label: 'display label',
-						default_value: 'default value',
-						custom_validation: '.@#AS/',
-						tags: [],
-						field_group: '',
-						extra: {}
-					},
-					{
-						type: 'select',
-						reference_name: 'Reference name thing',
-						display_label: 'display label',
-						default_value: 'default value',
-						custom_validation: '.@#AS/',
-						tags: [],
-						field_group: '',
-						extra: {
-							options: [
-								{
-									name: 'Test1',
-									value: 'test'
-								},
-								{
-									name: 'Test 2',
-									value: 'test2'
-								}
-							]
-						}
-					}
-				]
+				inputs: []
 			}
 		}
 	},
@@ -275,48 +241,3 @@ export default {
 	}
 }
 </script>
-<style lang="scss">
-html,body{
-	background: #F9FBFB;
-}
-.navbar{
-	background: #004953
-}
-.form-builder{
-	position: relative;
-	border: 1px solid #C1D7DA;
-	border-radius: 5px;
-	overflow-x: hidden;
-
-
-	& > .container{
-		padding-left: 0;
-		padding-right: 0;
-	}
-}
-.card{
-	cursor: pointer;
-}
-.editor_column{
-	background: #fff;
-}
-.form-container{
-    position: absolute;
-    top: 70px;
-    left: 20px;
-    right: 20px;
-    bottom: 50px;
-    max-width: 1500px;
-    margin: 0 auto;
-    min-height: 600px;
-
-    display: flex;
-    flex-direction: column;
-}
-.form-header, .form-footer{
-	flex: 0;
-}
-.form-builder{
-	flex: 1;
-}
-</style>	

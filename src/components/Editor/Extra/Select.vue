@@ -21,7 +21,7 @@
 				<div class="column col-2" v-if="option.position > 1">
 					<div class="form-group">
 						<label class="form-label">&nbsp;</label>
-						<button class="btn btn-error" v-on:click="removeOption(index)">Remove</button>
+						<button class="btn btn-error" v-on:click="removeOption(index)">X</button>
 					</div>
 				</div>
 			</div>
@@ -62,7 +62,8 @@ export default {
 		/**
 		 * Adds an option to the array of select options
 		 */
-		addOption: function() {
+		addOption: function() 
+		{
 			let options = this.current.extra.options;
 			let next_position = options[options.length-1].position + 1;
 			let new_option = Object.assign( {}, this.new_option )
@@ -75,7 +76,8 @@ export default {
 		 *
 		 * @param {int} index Index of the option to be removed
 		 */
-		removeOption: function( index ) {
+		removeOption: function( index ) 
+		{
 			this.current.extra.options.splice(index, 1);
 		}
 	}
