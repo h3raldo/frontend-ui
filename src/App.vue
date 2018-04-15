@@ -34,7 +34,7 @@
 			</div>
 
 			<div class="form-actions">
-				<button class="btn btn-primary btn-lg" @click="saveInput" v-bind:class="{ 'disabled': !canSaveInput() && !isLoading, 'loading': view.isLoading }">
+				<button class="btn btn-primary btn-lg" @click="saveInput" v-bind:class="{ 'disabled': (!canSaveInput() && !view.isLoading), 'loading': view.isLoading }">
 					<template v-if="canSaveInput() || view.isLoading">Save Changes</template>
 					<template v-else>Missing Required Fields</template>
 				</button>
@@ -73,10 +73,10 @@ export default {
 		 */
 		canSaveInput: function()
 		{
-			if( this.view.current.display_label.length < 1 ){
+			if( !this.view.current.display_label ){
 				return false;
 			}
-			if( this.view.current.reference_name.length < 1 ){
+			if( !this.view.current.reference_name ){
 				return false;
 			}
 
