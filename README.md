@@ -1,9 +1,6 @@
 # Frontend for IntuitiveWebSolutions
 
 I am using [Vue-Cli](https://github.com/vuejs/vue-cli) for developing the frontend in Vue. 
-This is my first time using Vue and it was a fun project! 
-
-Thank you for the opportunity to apply at Britecore.
 
 ## How to run
 
